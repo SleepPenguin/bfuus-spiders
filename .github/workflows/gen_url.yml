@@ -1,0 +1,30 @@
+name: Auto Spider to Generate URLs and Upload to Hugging Face Hub
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * 0" # Weekly at 09:00 Asia/Shanghai (1:00 UTC)
+
+permissions:
+  contents: write
+jobs:
+  gen:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.8"
+      - name: install deps
+        run: pip install -r requirements.txt
+      - name: process
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: bash binance_futures_um_usdt_swap.sh
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "chore: update binance vision urls"

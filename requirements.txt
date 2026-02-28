@@ -1,0 +1,8 @@
+# spider_um.py
+requests
+polars
+dotenv
+huggingface_hub
+# gen_url.py
+aiohttp
+aiofiles
