@@ -110,8 +110,8 @@ class BinanceDataURLSpider:
         return entries
 
     async def generate_urls(self, pattern: str, symbol_glob: str):
-        # async with aiohttp.ClientSession() as session:
-        async with aiohttp.ClientSession(proxy='http://127.0.0.1:7897') as session:
+        async with aiohttp.ClientSession() as session:
+        # async with aiohttp.ClientSession(proxy='http://127.0.0.1:7897') as session:
             endpoint = pattern.split("SYMBOL")[0]
             all_symbols = await self.list_prefix(session, endpoint)
             symbols = [s for s in all_symbols if fnmatch.fnmatch(s, symbol_glob)]
