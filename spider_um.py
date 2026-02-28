@@ -1,6 +1,7 @@
 import requests
 import zipfile
 import polars as pl
+import time
 import os
 import io
 import argparse
@@ -153,6 +154,8 @@ if __name__ == "__main__":
     for url in urls:
         try:
             process_one_url(url)
+            # 700 month ~ 2100 min ~ 35 h
+            time.sleep(3 * 60)  # 128 req per hour, 1 month = 6 req => 20 month per hour =>  3min per month
         except Exception as e:
             print(f"Error processing URL: {url}. Error: {e}")
             with open("error.log", "a") as log_file:
